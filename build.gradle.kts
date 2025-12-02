@@ -1,8 +1,11 @@
+import net.ltgt.gradle.errorprone.errorprone
+
 plugins {
     java
     `java-library`
     `maven-publish`
     id("com.diffplug.spotless") version "7.0.2"
+    id("net.ltgt.errorprone") version "4.1.0"
 }
 
 group = "dev.tlmtech"
@@ -16,6 +19,17 @@ java {
     withJavadocJar()
 }
 
+tasks.withType<JavaCompile>().configureEach {
+    options.errorprone {
+        disableWarningsInGeneratedCode.set(true)
+        allErrorsAsWarnings.set(false)
+        allDisabledChecksAsWarnings.set(false)
+        // Promote warnings to errors so CI fails on issues
+        option("--enable-all-checks")
+    }
+    options.compilerArgs.add("-Werror")
+}
+
 repositories {
     mavenCentral()
 }
@@ -24,6 +38,8 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    errorprone("com.google.errorprone:error_prone_core:2.36.0")
 }
 
 tasks.test {

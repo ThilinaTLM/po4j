@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test;
 class RealWorldFileTest {
 
     private static final String REAL_WORLD_FILE = "/po/real-world.po";
-    private static final int EXPECTED_ENTRY_COUNT = 1590;
 
     @Test
     void testParseRealWorldFile() throws IOException {

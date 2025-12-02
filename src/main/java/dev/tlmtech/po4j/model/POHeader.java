@@ -1,6 +1,7 @@
 package dev.tlmtech.po4j.model;
 
 import java.util.*;
+import java.util.Locale;
 
 /**
  * Represents the header of a PO file.
@@ -73,7 +74,7 @@ public final class POHeader {
             return;
         }
 
-        for (String line : msgstr.split("\n")) {
+        for (String line : msgstr.split("\n", -1)) {
             if (line.isEmpty()) {
                 continue;
             }
@@ -162,7 +163,7 @@ public final class POHeader {
      */
     public Optional<String> getCharset() {
         return getContentType().flatMap(ct -> {
-            String lower = ct.toLowerCase();
+            String lower = ct.toLowerCase(Locale.ROOT);
             int idx = lower.indexOf("charset=");
             if (idx < 0) return Optional.empty();
             String charset = ct.substring(idx + 8).trim();

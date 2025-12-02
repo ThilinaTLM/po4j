@@ -79,7 +79,7 @@ public class ParseException extends RuntimeException {
         if (column > 0) {
             sb.append(", column ").append(column);
         }
-        sb.append(": ").append(getMessage());
+        sb.append(": ").append(super.getMessage());
 
         if (context != null && !context.isEmpty()) {
             sb.append("\n").append(context);
@@ -92,7 +92,7 @@ public class ParseException extends RuntimeException {
     }
 
     @Override
-    public String toString() {
+    public String getMessage() {
         return getFormattedMessage();
     }
 }

@@ -325,7 +325,7 @@ public class POWriter implements Closeable {
         int maxLen = options.getMaxLineWidth() - 4; // Account for quotes and prefix
 
         // First, split on \n
-        String[] parts = escaped.split("(?<=\\\\n)");
+        String[] parts = escaped.split("(?<=\\\\n)", -1);
 
         for (String part : parts) {
             if (part.isEmpty()) {

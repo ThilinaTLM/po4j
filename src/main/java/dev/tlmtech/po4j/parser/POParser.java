@@ -253,7 +253,7 @@ public class POParser implements Closeable {
         if (value == null || value.isEmpty()) {
             return;
         }
-        String[] refs = value.trim().split("\\s+");
+        String[] refs = value.trim().split("\\s+", -1);
         for (String ref : refs) {
             if (!ref.isEmpty()) {
                 builder.addReference(ref);
@@ -266,7 +266,7 @@ public class POParser implements Closeable {
         if (value == null || value.isEmpty()) {
             return;
         }
-        String[] flags = value.split(",");
+        String[] flags = value.split(",", -1);
         for (String flag : flags) {
             String trimmed = flag.trim();
             if (!trimmed.isEmpty()) {
@@ -391,10 +391,6 @@ public class POParser implements Closeable {
         return result.toString();
     }
 
-    private String parseStringValue() throws IOException {
-        return parseStringValue(false);
-    }
-
     private void consumeObsoletePrefix() throws IOException {
         Token token = lexer.peek();
         if (token.type() == TokenType.OBSOLETE_PREFIX) {
@@ -405,8 +401,6 @@ public class POParser implements Closeable {
     private void skipToNextEntry() throws IOException {
         // Skip tokens until we find what looks like the start of a new entry
         // (comment at start of line or msgid/msgctxt after blank line)
-        int blankLines = 0;
-
         while (true) {
             Token token = lexer.nextToken();
 

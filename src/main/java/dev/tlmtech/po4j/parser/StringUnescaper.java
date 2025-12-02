@@ -73,7 +73,6 @@ public final class StringUnescaper {
                 case '?' -> result.append('?'); // C trigraph escape (rarely used)
                 case '0', '1', '2', '3', '4', '5', '6', '7' -> {
                     // Octal escape: \0 through \377 (1-3 octal digits)
-                    int octalStart = i - 1; // Points to first digit
                     int octalValue = next - '0';
 
                     // Read up to 2 more octal digits
