@@ -79,9 +79,18 @@ public final class StringEscaper {
 
         for (int i = 0; i < input.length(); i++) {
             char c = input.charAt(i);
-            if (c == '\\' || c == '"' || c == '\n' || c == '\t' || c == '\r'
-                    || c == '\u000B' || c == '\b' || c == '\f' || c == '\u0007'
-                    || c == '\0' || c < 0x20 || c == 0x7F) {
+            if (c == '\\'
+                    || c == '"'
+                    || c == '\n'
+                    || c == '\t'
+                    || c == '\r'
+                    || c == '\u000B'
+                    || c == '\b'
+                    || c == '\f'
+                    || c == '\u0007'
+                    || c == '\0'
+                    || c < 0x20
+                    || c == 0x7F) {
                 return true;
             }
         }

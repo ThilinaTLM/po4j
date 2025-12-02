@@ -90,9 +90,7 @@ public final class POFile {
      * If multiple entries have the same msgid (different contexts), returns the first one.
      */
     public Optional<POEntry> findByMsgid(String msgid) {
-        return entries.stream()
-                .filter(e -> e.getMsgid().equals(msgid))
-                .findFirst();
+        return entries.stream().filter(e -> e.getMsgid().equals(msgid)).findFirst();
     }
 
     /**
@@ -112,36 +110,28 @@ public final class POFile {
      * Finds all entries with the specified msgid (may have different contexts).
      */
     public List<POEntry> findAllByMsgid(String msgid) {
-        return entries.stream()
-                .filter(e -> e.getMsgid().equals(msgid))
-                .toList();
+        return entries.stream().filter(e -> e.getMsgid().equals(msgid)).toList();
     }
 
     /**
      * Returns all entries that are marked as fuzzy.
      */
     public List<POEntry> getFuzzyEntries() {
-        return entries.stream()
-                .filter(POEntry::isFuzzy)
-                .toList();
+        return entries.stream().filter(POEntry::isFuzzy).toList();
     }
 
     /**
      * Returns all entries that are not translated.
      */
     public List<POEntry> getUntranslatedEntries() {
-        return entries.stream()
-                .filter(e -> !e.isTranslated())
-                .toList();
+        return entries.stream().filter(e -> !e.isTranslated()).toList();
     }
 
     /**
      * Returns all entries that have the specified flag.
      */
     public List<POEntry> getEntriesWithFlag(String flag) {
-        return entries.stream()
-                .filter(e -> e.hasFlag(flag))
-                .toList();
+        return entries.stream().filter(e -> e.hasFlag(flag)).toList();
     }
 
     // --- Statistics ---
@@ -183,11 +173,10 @@ public final class POFile {
 
     @Override
     public String toString() {
-        return "POFile{" +
-                "header=" + (header != null) +
-                ", entries=" + entries.size() +
-                ", obsolete=" + obsoleteEntries.size() +
-                "}";
+        return "POFile{" + "header="
+                + (header != null) + ", entries="
+                + entries.size() + ", obsolete="
+                + obsoleteEntries.size() + "}";
     }
 
     // --- Builder ---
@@ -197,8 +186,7 @@ public final class POFile {
         private final List<POEntry> obsoleteEntries = new ArrayList<>();
         private POHeader header;
 
-        private Builder() {
-        }
+        private Builder() {}
 
         public Builder header(POHeader header) {
             this.header = header;

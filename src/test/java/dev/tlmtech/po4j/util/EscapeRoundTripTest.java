@@ -1,12 +1,12 @@
 package dev.tlmtech.po4j.util;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import dev.tlmtech.po4j.parser.StringUnescaper;
 import dev.tlmtech.po4j.writer.StringEscaper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class EscapeRoundTripTest {
 
@@ -163,14 +163,15 @@ class EscapeRoundTripTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {
-            "Simple text",
-            "Unicode: café résumé naïve",
-            "Japanese: 日本語",
-            "Emoji: Hello 世界",
-            "Mixed: Tab\there\nNewline\"Quote\\Backslash",
-            ""
-    })
+    @ValueSource(
+            strings = {
+                "Simple text",
+                "Unicode: café résumé naïve",
+                "Japanese: 日本語",
+                "Emoji: Hello 世界",
+                "Mixed: Tab\there\nNewline\"Quote\\Backslash",
+                ""
+            })
     void testRoundTrip(String original) {
         String escaped = StringEscaper.escape(original);
         String unescaped = StringUnescaper.unescape(escaped);
@@ -187,14 +188,12 @@ class EscapeRoundTripTest {
 
     @Test
     void testIncompleteEscapeThrows() {
-        assertThrows(IllegalArgumentException.class, () ->
-                StringUnescaper.unescape("trailing\\"));
+        assertThrows(IllegalArgumentException.class, () -> StringUnescaper.unescape("trailing\\"));
     }
 
     @Test
     void testInvalidHexEscapeThrows() {
-        assertThrows(IllegalArgumentException.class, () ->
-                StringUnescaper.unescape("\\xZZ"));
+        assertThrows(IllegalArgumentException.class, () -> StringUnescaper.unescape("\\xZZ"));
     }
 
     @Test

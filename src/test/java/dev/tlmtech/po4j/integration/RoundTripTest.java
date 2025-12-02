@@ -1,17 +1,16 @@
 package dev.tlmtech.po4j.integration;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import dev.tlmtech.po4j.model.POEntry;
 import dev.tlmtech.po4j.model.POFile;
 import dev.tlmtech.po4j.model.POHeader;
 import dev.tlmtech.po4j.model.PluralForms;
 import dev.tlmtech.po4j.parser.POParser;
 import dev.tlmtech.po4j.writer.POWriter;
-import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 /**
  * Integration tests verifying that parsing and writing PO files
@@ -38,12 +37,15 @@ class RoundTripTest {
 
         assertEquals(parsed.size(), reparsed.size());
         assertEquals(entry.getMsgid(), reparsed.getEntries().get(0).getMsgid());
-        assertEquals(entry.getMsgstr().orElse(null), reparsed.getEntries().get(0).getMsgstr().orElse(null));
+        assertEquals(
+                entry.getMsgstr().orElse(null),
+                reparsed.getEntries().get(0).getMsgstr().orElse(null));
     }
 
     @Test
     void testEntryWithContext() throws IOException {
-        String input = """
+        String input =
+                """
                 msgctxt "menu"
                 msgid "File"
                 msgstr "Fichier"
@@ -65,7 +67,8 @@ class RoundTripTest {
 
     @Test
     void testPluralEntry() throws IOException {
-        String input = """
+        String input =
+                """
                 msgid "One file"
                 msgid_plural "%d files"
                 msgstr[0] "Un fichier"
@@ -92,7 +95,8 @@ class RoundTripTest {
 
     @Test
     void testAllCommentTypes() throws IOException {
-        String input = """
+        String input =
+                """
                 # Translator comment
                 #. Extracted comment
                 #: file.c:123 file.c:456
@@ -121,14 +125,15 @@ class RoundTripTest {
 
     @Test
     void testHeader() throws IOException {
-        String input = """
+        String input =
+                """
                 msgid ""
                 msgstr ""
                 "Project-Id-Version: Test 1.0\\n"
                 "Language: fr\\n"
                 "Content-Type: text/plain; charset=UTF-8\\n"
                 "Plural-Forms: nplurals=2; plural=(n > 1);\\n"
-                
+
                 msgid "Hello"
                 msgstr "Bonjour"
                 """;
@@ -155,7 +160,8 @@ class RoundTripTest {
 
     @Test
     void testMultiLineStrings() throws IOException {
-        String input = """
+        String input =
+                """
                 msgid ""
                 "First line\\n"
                 "Second line\\n"
@@ -170,7 +176,8 @@ class RoundTripTest {
         POEntry entry = parsed.getEntries().get(0);
 
         assertEquals("First line\nSecond line\nThird line", entry.getMsgid());
-        assertEquals("Première ligne\nDeuxième ligne\nTroisième ligne",
+        assertEquals(
+                "Première ligne\nDeuxième ligne\nTroisième ligne",
                 entry.getMsgstr().orElse(null));
 
         String output = POWriter.writeToString(parsed);
@@ -181,7 +188,8 @@ class RoundTripTest {
 
     @Test
     void testEscapeSequences() throws IOException {
-        String input = """
+        String input =
+                """
                 msgid "Tab:\\tNewline:\\nQuote:\\""
                 msgstr "Tab:\\tNouvelle ligne:\\nGuillemet:\\""
                 """;
@@ -199,10 +207,11 @@ class RoundTripTest {
 
     @Test
     void testObsoleteEntry() throws IOException {
-        String input = """
+        String input =
+                """
                 msgid "Current"
                 msgstr "Actuel"
-                
+
                 #~ msgid "Old"
                 #~ msgstr "Ancien"
                 """;
@@ -224,7 +233,8 @@ class RoundTripTest {
 
     @Test
     void testPreviousValues() throws IOException {
-        String input = """
+        String input =
+                """
                 #| msgid "Previous message"
                 msgid "Current message"
                 msgstr "Message actuel"
@@ -239,19 +249,21 @@ class RoundTripTest {
         assertTrue(output.contains("#| msgid"));
 
         POFile reparsed = POParser.parseString(output);
-        assertEquals("Previous message",
+        assertEquals(
+                "Previous message",
                 reparsed.getEntries().get(0).getPreviousMsgid().orElse(null));
     }
 
     @Test
     void testMultipleEntries() throws IOException {
-        String input = """
+        String input =
+                """
                 msgid "First"
                 msgstr "Premier"
-                
+
                 msgid "Second"
                 msgstr "Deuxième"
-                
+
                 msgid "Third"
                 msgstr "Troisième"
                 """;
@@ -271,10 +283,11 @@ class RoundTripTest {
 
     @Test
     void testUnicodeContent() throws IOException {
-        String input = """
+        String input =
+                """
                 msgid "Hello"
                 msgstr "你好"
-                
+
                 msgid "Goodbye"
                 msgstr "さようなら"
                 """;
@@ -314,10 +327,7 @@ class RoundTripTest {
     @Test
     void testBuilderAPI() throws IOException {
         POFile poFile = POFile.builder()
-                .header(POHeader.builder()
-                        .language("de")
-                        .withDefaults()
-                        .build())
+                .header(POHeader.builder().language("de").withDefaults().build())
                 .entry(POEntry.builder()
                         .msgid("Hello")
                         .msgstr("Hallo")

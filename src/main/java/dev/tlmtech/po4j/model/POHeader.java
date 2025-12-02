@@ -161,19 +161,18 @@ public final class POHeader {
      * Parses "text/plain; charset=UTF-8" to return "UTF-8".
      */
     public Optional<String> getCharset() {
-        return getContentType()
-                .flatMap(ct -> {
-                    String lower = ct.toLowerCase();
-                    int idx = lower.indexOf("charset=");
-                    if (idx < 0) return Optional.empty();
-                    String charset = ct.substring(idx + 8).trim();
-                    // Remove trailing semicolon or other parameters
-                    int endIdx = charset.indexOf(';');
-                    if (endIdx > 0) {
-                        charset = charset.substring(0, endIdx);
-                    }
-                    return Optional.of(charset.trim());
-                });
+        return getContentType().flatMap(ct -> {
+            String lower = ct.toLowerCase();
+            int idx = lower.indexOf("charset=");
+            if (idx < 0) return Optional.empty();
+            String charset = ct.substring(idx + 8).trim();
+            // Remove trailing semicolon or other parameters
+            int endIdx = charset.indexOf(';');
+            if (endIdx > 0) {
+                charset = charset.substring(0, endIdx);
+            }
+            return Optional.of(charset.trim());
+        });
     }
 
     public Optional<String> getContentTransferEncoding() {
@@ -210,9 +209,7 @@ public final class POHeader {
      * Converts this header back to a POEntry.
      */
     public POEntry toEntry() {
-        POEntry.Builder builder = POEntry.builder()
-                .msgid("")
-                .msgstr(toMsgstr());
+        POEntry.Builder builder = POEntry.builder().msgid("").msgstr(toMsgstr());
 
         for (String comment : translatorComments) {
             builder.addTranslatorComment(comment);
@@ -259,8 +256,7 @@ public final class POHeader {
         private final List<String> translatorComments = new ArrayList<>();
         private final Set<String> flags = new LinkedHashSet<>();
 
-        private Builder() {
-        }
+        private Builder() {}
 
         public Builder field(String name, String value) {
             if (value == null) {

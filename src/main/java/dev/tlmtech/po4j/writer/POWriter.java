@@ -3,7 +3,6 @@ package dev.tlmtech.po4j.writer;
 import dev.tlmtech.po4j.model.POEntry;
 import dev.tlmtech.po4j.model.POFile;
 import dev.tlmtech.po4j.model.POHeader;
-
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -50,16 +49,15 @@ public class POWriter implements Closeable {
     /**
      * Writes a POFile to an output stream.
      */
-    public static void write(POFile poFile, OutputStream outputStream, Charset charset)
-            throws IOException {
+    public static void write(POFile poFile, OutputStream outputStream, Charset charset) throws IOException {
         write(poFile, outputStream, charset, POWriterOptions.defaults());
     }
 
     /**
      * Writes a POFile to an output stream with options.
      */
-    public static void write(POFile poFile, OutputStream outputStream, Charset charset,
-                             POWriterOptions options) throws IOException {
+    public static void write(POFile poFile, OutputStream outputStream, Charset charset, POWriterOptions options)
+            throws IOException {
         try (POWriter writer = new POWriter(new OutputStreamWriter(outputStream, charset), options)) {
             writer.write(poFile);
         }
@@ -75,8 +73,7 @@ public class POWriter implements Closeable {
     /**
      * Writes a POFile to a writer with options.
      */
-    public static void write(POFile poFile, Writer writer, POWriterOptions options)
-            throws IOException {
+    public static void write(POFile poFile, Writer writer, POWriterOptions options) throws IOException {
         try (POWriter poWriter = new POWriter(writer, options)) {
             poWriter.write(poFile);
         }
@@ -288,14 +285,12 @@ public class POWriter implements Closeable {
 
     // --- String writing ---
 
-    private void writeStringLines(String keyword, String value, boolean obsolete)
-            throws IOException {
+    private void writeStringLines(String keyword, String value, boolean obsolete) throws IOException {
         String escaped = StringEscaper.escape(value);
 
         // Check if we need multi-line format
-        boolean needsMultiLine = options.isWrapStrings() &&
-                (keyword.length() + 2 + escaped.length() > options.getMaxLineWidth()
-                        || escaped.contains("\\n"));
+        boolean needsMultiLine = options.isWrapStrings()
+                && (keyword.length() + 2 + escaped.length() > options.getMaxLineWidth() || escaped.contains("\\n"));
 
         if (!needsMultiLine) {
             // Single line format

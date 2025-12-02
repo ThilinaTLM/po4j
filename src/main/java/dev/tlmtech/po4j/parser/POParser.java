@@ -2,7 +2,6 @@ package dev.tlmtech.po4j.parser;
 
 import dev.tlmtech.po4j.model.POEntry;
 import dev.tlmtech.po4j.model.POFile;
-
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.*;
@@ -68,11 +67,8 @@ public class POParser implements Closeable {
     /**
      * Parses a PO file from an input stream with options.
      */
-    public static POFile parse(InputStream inputStream, Charset charset, POParserOptions options)
-            throws IOException {
-        try (POParser parser = new POParser(
-                new POLexer(new InputStreamReader(inputStream, charset)),
-                options)) {
+    public static POFile parse(InputStream inputStream, Charset charset, POParserOptions options) throws IOException {
+        try (POParser parser = new POParser(new POLexer(new InputStreamReader(inputStream, charset)), options)) {
             return parser.parse();
         }
     }
@@ -184,10 +180,7 @@ public class POParser implements Closeable {
             if (token.isEof()) {
                 return null; // No more entries
             }
-            throw new ParseException(
-                    "Expected msgid, found " + token.type(),
-                    token.line(), token.column()
-            );
+            throw new ParseException("Expected msgid, found " + token.type(), token.line(), token.column());
         }
         lexer.nextToken();
         String msgid = parseStringValue(isObsolete);
@@ -215,10 +208,7 @@ public class POParser implements Closeable {
             // Parse singular msgstr
             token = lexer.peek();
             if (token.type() != TokenType.MSGSTR) {
-                throw new ParseException(
-                        "Expected msgstr, found " + token.type(),
-                        token.line(), token.column()
-                );
+                throw new ParseException("Expected msgstr, found " + token.type(), token.line(), token.column());
             }
             lexer.nextToken();
             String msgstr = parseStringValue(isObsolete);
@@ -250,7 +240,9 @@ public class POParser implements Closeable {
                 case COMMENT_REFERENCE -> parseReferences(builder, value);
                 case COMMENT_FLAG -> parseFlags(builder, value);
                 case COMMENT_PREVIOUS -> parsePrevious(builder, value);
-                default -> { /* Ignore */ }
+                default -> {
+                    /* Ignore */
+                }
             }
         }
     }
@@ -360,7 +352,8 @@ public class POParser implements Closeable {
 
         // Convert to list, filling gaps with empty strings
         if (!plurals.isEmpty()) {
-            int maxIndex = plurals.keySet().stream().mapToInt(Integer::intValue).max().orElse(0);
+            int maxIndex =
+                    plurals.keySet().stream().mapToInt(Integer::intValue).max().orElse(0);
             List<String> msgstrPlural = new ArrayList<>(maxIndex + 1);
             for (int i = 0; i <= maxIndex; i++) {
                 msgstrPlural.add(plurals.getOrDefault(i, ""));
@@ -422,8 +415,7 @@ public class POParser implements Closeable {
             }
 
             // A blank line followed by a keyword or comment suggests new entry
-            if (token.type().isComment() || token.type().isKeyword()
-                    || token.type() == TokenType.OBSOLETE_PREFIX) {
+            if (token.type().isComment() || token.type().isKeyword() || token.type() == TokenType.OBSOLETE_PREFIX) {
                 // Put it back and let the main loop handle it
                 // Note: We can't really "unread" a token, so we'll just
                 // check if this looks like a valid entry start and return

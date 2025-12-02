@@ -1,18 +1,17 @@
 package dev.tlmtech.po4j.integration;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import dev.tlmtech.po4j.model.POEntry;
 import dev.tlmtech.po4j.model.POFile;
 import dev.tlmtech.po4j.model.POHeader;
 import dev.tlmtech.po4j.model.PluralForms;
 import dev.tlmtech.po4j.parser.POParser;
 import dev.tlmtech.po4j.writer.POWriter;
-import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests parsing a sample PO file with various features.
@@ -105,24 +104,24 @@ class SampleFileTest {
 
             // Compare
             assertEquals(original.size(), reparsed.size());
-            assertEquals(original.getObsoleteEntries().size(), reparsed.getObsoleteEntries().size());
+            assertEquals(
+                    original.getObsoleteEntries().size(),
+                    reparsed.getObsoleteEntries().size());
 
             // Check header preserved
             assertTrue(reparsed.getHeader().isPresent());
             assertEquals(
                     original.getHeader().get().getLanguage().orElse(null),
-                    reparsed.getHeader().get().getLanguage().orElse(null)
-            );
+                    reparsed.getHeader().get().getLanguage().orElse(null));
 
             // Check each entry
             for (int i = 0; i < original.size(); i++) {
                 POEntry orig = original.getEntries().get(i);
                 POEntry repr = reparsed.getEntries().get(i);
                 assertEquals(orig.getMsgid(), repr.getMsgid(), "Msgid mismatch at " + i);
-                assertEquals(orig.getMsgstr().orElse(null), repr.getMsgstr().orElse(null),
-                        "Msgstr mismatch at " + i);
-                assertEquals(orig.getMsgctxt().orElse(null), repr.getMsgctxt().orElse(null),
-                        "Msgctxt mismatch at " + i);
+                assertEquals(orig.getMsgstr().orElse(null), repr.getMsgstr().orElse(null), "Msgstr mismatch at " + i);
+                assertEquals(
+                        orig.getMsgctxt().orElse(null), repr.getMsgctxt().orElse(null), "Msgctxt mismatch at " + i);
                 assertEquals(orig.isPlural(), repr.isPlural(), "Plural mismatch at " + i);
             }
         }

@@ -112,10 +112,7 @@ public class POLexer implements Closeable {
             return scanKeyword(startLine, startColumn);
         }
 
-        throw new ParseException(
-                "Unexpected character '" + (char) ch + "'",
-                startLine, startColumn, currentLine
-        );
+        throw new ParseException("Unexpected character '" + (char) ch + "'", startLine, startColumn, currentLine);
     }
 
     private Token scanComment(int startLine, int startColumn) throws IOException {
@@ -162,30 +159,31 @@ public class POLexer implements Closeable {
         }
 
         // Determine comment type based on second character
-        TokenType type = switch (ch) {
-            case '.' -> TokenType.COMMENT_EXTRACTED;
-            case ':' -> TokenType.COMMENT_REFERENCE;
-            case ',' -> TokenType.COMMENT_FLAG;
-            case '|' -> TokenType.COMMENT_PREVIOUS;
-            case ' ', '\t', '\n', '\r', -1 -> {
-                // Translator comment - space after # or empty
-                if (ch == '\n' || ch == '\r' || ch == -1) {
-                    if (ch == '\r') {
-                        int lf = readChar();
-                        if (lf != '\n') {
-                            unreadChar(lf);
+        TokenType type =
+                switch (ch) {
+                    case '.' -> TokenType.COMMENT_EXTRACTED;
+                    case ':' -> TokenType.COMMENT_REFERENCE;
+                    case ',' -> TokenType.COMMENT_FLAG;
+                    case '|' -> TokenType.COMMENT_PREVIOUS;
+                    case ' ', '\t', '\n', '\r', -1 -> {
+                        // Translator comment - space after # or empty
+                        if (ch == '\n' || ch == '\r' || ch == -1) {
+                            if (ch == '\r') {
+                                int lf = readChar();
+                                if (lf != '\n') {
+                                    unreadChar(lf);
+                                }
+                            }
+                            yield TokenType.COMMENT_TRANSLATOR;
                         }
+                        yield TokenType.COMMENT_TRANSLATOR;
                     }
-                    yield TokenType.COMMENT_TRANSLATOR;
-                }
-                yield TokenType.COMMENT_TRANSLATOR;
-            }
-            default -> {
-                // # followed by other char - could be translator comment without space
-                unreadChar(ch);
-                yield TokenType.COMMENT_TRANSLATOR;
-            }
-        };
+                    default -> {
+                        // # followed by other char - could be translator comment without space
+                        unreadChar(ch);
+                        yield TokenType.COMMENT_TRANSLATOR;
+                    }
+                };
 
         // Read the rest of the comment line
         String content;
@@ -206,10 +204,7 @@ public class POLexer implements Closeable {
             int ch = readChar();
 
             if (ch == -1) {
-                throw new ParseException(
-                        "Unterminated string literal",
-                        startLine, startColumn, currentLine
-                );
+                throw new ParseException("Unterminated string literal", startLine, startColumn, currentLine);
             }
 
             if (escaped) {
@@ -232,8 +227,9 @@ public class POLexer implements Closeable {
             if (ch == '\n' || ch == '\r') {
                 throw new ParseException(
                         "Newline in string literal (use \\n for embedded newlines)",
-                        startLine, startColumn, currentLine
-                );
+                        startLine,
+                        startColumn,
+                        currentLine);
             }
 
             sb.append((char) ch);
@@ -276,10 +272,7 @@ public class POLexer implements Closeable {
                 if (m.matches()) {
                     yield new Token(TokenType.MSGSTR_PLURAL, m.group(1), startLine, startColumn);
                 }
-                throw new ParseException(
-                        "Unknown keyword '" + keyword + "'",
-                        startLine, startColumn, currentLine
-                );
+                throw new ParseException("Unknown keyword '" + keyword + "'", startLine, startColumn, currentLine);
             }
         };
     }

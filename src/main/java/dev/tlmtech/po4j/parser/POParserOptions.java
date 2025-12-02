@@ -47,8 +47,7 @@ public final class POParserOptions {
         private boolean strict = true;
         private boolean preserveObsolete = true;
 
-        private Builder() {
-        }
+        private Builder() {}
 
         /**
          * Sets strict parsing mode.

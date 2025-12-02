@@ -2,6 +2,7 @@ plugins {
     java
     `java-library`
     `maven-publish`
+    id("com.diffplug.spotless") version "7.0.2"
 }
 
 group = "dev.tlmtech"
@@ -73,5 +74,26 @@ publishing {
                 }
             }
         }
+    }
+}
+
+spotless {
+    java {
+        target("src/**/*.java")
+        palantirJavaFormat("2.50.0")
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+
+    kotlinGradle {
+        target("*.gradle.kts")
+        ktlint("1.5.0")
+    }
+
+    format("misc") {
+        target("*.md", "*.yml", ".github/**/*.yml")
+        trimTrailingWhitespace()
+        endWithNewline()
     }
 }

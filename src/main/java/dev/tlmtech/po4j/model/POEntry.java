@@ -38,9 +38,7 @@ public final class POEntry {
         this.msgid = Objects.requireNonNull(builder.msgid, "msgid is required");
         this.msgidPlural = builder.msgidPlural;
         this.msgstr = builder.msgstr;
-        this.msgstrPlural = builder.msgstrPlural != null
-                ? List.copyOf(builder.msgstrPlural)
-                : List.of();
+        this.msgstrPlural = builder.msgstrPlural != null ? List.copyOf(builder.msgstrPlural) : List.of();
         this.translatorComments = List.copyOf(builder.translatorComments);
         this.extractedComments = List.copyOf(builder.extractedComments);
         this.references = List.copyOf(builder.references);
@@ -218,9 +216,20 @@ public final class POEntry {
 
     @Override
     public int hashCode() {
-        return Objects.hash(msgctxt, msgid, msgidPlural, msgstr, msgstrPlural,
-                translatorComments, extractedComments, references, flags,
-                previousMsgctxt, previousMsgid, previousMsgidPlural, obsolete);
+        return Objects.hash(
+                msgctxt,
+                msgid,
+                msgidPlural,
+                msgstr,
+                msgstrPlural,
+                translatorComments,
+                extractedComments,
+                references,
+                flags,
+                previousMsgctxt,
+                previousMsgid,
+                previousMsgidPlural,
+                obsolete);
     }
 
     @Override
@@ -269,8 +278,7 @@ public final class POEntry {
         private String previousMsgidPlural;
         private boolean obsolete;
 
-        private Builder() {
-        }
+        private Builder() {}
 
         public Builder msgctxt(String msgctxt) {
             this.msgctxt = msgctxt;

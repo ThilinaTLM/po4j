@@ -57,9 +57,7 @@ public record Token(TokenType type, String value, int line, int column) {
         if (value == null || value.isEmpty()) {
             return String.format("%s at %d:%d", type, line, column);
         }
-        String displayValue = value.length() > 30
-                ? value.substring(0, 27) + "..."
-                : value;
+        String displayValue = value.length() > 30 ? value.substring(0, 27) + "..." : value;
         return String.format("%s('%s') at %d:%d", type, displayValue, line, column);
     }
 }

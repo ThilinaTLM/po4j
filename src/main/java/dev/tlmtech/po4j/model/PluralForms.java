@@ -14,9 +14,7 @@ import java.util.regex.Pattern;
 public final class PluralForms {
 
     private static final Pattern PLURAL_FORMS_PATTERN = Pattern.compile(
-            "nplurals\\s*=\\s*(\\d+)\\s*;\\s*plural\\s*=\\s*(.+?)\\s*;?\\s*$",
-            Pattern.CASE_INSENSITIVE
-    );
+            "nplurals\\s*=\\s*(\\d+)\\s*;\\s*plural\\s*=\\s*(.+?)\\s*;?\\s*$", Pattern.CASE_INSENSITIVE);
 
     private final int nplurals;
     private final String pluralExpression;

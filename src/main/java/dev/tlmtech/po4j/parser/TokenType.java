@@ -74,8 +74,7 @@ public enum TokenType {
      */
     public boolean isComment() {
         return switch (this) {
-            case COMMENT_TRANSLATOR, COMMENT_EXTRACTED, COMMENT_REFERENCE,
-                 COMMENT_FLAG, COMMENT_PREVIOUS -> true;
+            case COMMENT_TRANSLATOR, COMMENT_EXTRACTED, COMMENT_REFERENCE, COMMENT_FLAG, COMMENT_PREVIOUS -> true;
             default -> false;
         };
     }

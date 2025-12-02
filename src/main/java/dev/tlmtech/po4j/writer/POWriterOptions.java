@@ -80,8 +80,7 @@ public final class POWriterOptions {
         private boolean writeObsolete = true;
         private boolean sortEntries = false;
 
-        private Builder() {
-        }
+        private Builder() {}
 
         /**
          * Sets the maximum line width for string wrapping.
