@@ -60,6 +60,10 @@ dependencies {
 ### Reading a PO File
 
 ```java
+import dev.tlmtech.po4j.model.POFile;
+import dev.tlmtech.po4j.model.POEntry;
+import dev.tlmtech.po4j.parser.POParser;
+
 // From file
 try (InputStream is = new FileInputStream("messages.po")) {
     POFile poFile = POParser.parse(is, StandardCharsets.UTF_8);
@@ -79,6 +83,8 @@ POFile poFile = POParser.parseString("""
 ### Creating a PO File
 
 ```java
+import dev.tlmtech.po4j.model.*;
+
 POFile poFile = POFile.builder()
     .header(POHeader.builder()
         .language("fr")
@@ -124,6 +130,8 @@ POFile modified = original.toBuilder()
 ### Writing a PO File
 
 ```java
+import dev.tlmtech.po4j.writer.POWriter;
+
 // To string
 String output = POWriter.writeToString(poFile);
 
