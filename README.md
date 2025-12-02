@@ -49,6 +49,7 @@ dependencies {
 ### Maven
 
 ```xml
+
 <repositories>
     <repository>
         <id>jitpack.io</id>
@@ -57,9 +58,9 @@ dependencies {
 </repositories>
 
 <dependency>
-    <groupId>com.github.ThilinaTLM</groupId>
-    <artifactId>po4j</artifactId>
-    <version>0.1.0</version>
+<groupId>com.github.ThilinaTLM</groupId>
+<artifactId>po4j</artifactId>
+<version>0.1.0</version>
 </dependency>
 ```
 
@@ -72,19 +73,28 @@ import dev.tlmtech.po4j.model.*;
 import dev.tlmtech.po4j.parser.POParser;
 
 // From a file
-try (InputStream is = new FileInputStream("messages.po")) {
-    POFile poFile = POParser.parse(is, StandardCharsets.UTF_8);
+try(InputStream is = new FileInputStream("messages.po")){
+POFile poFile = POParser.parse(is, StandardCharsets.UTF_8);
 
-    for (POEntry entry : poFile.getEntries()) {
-        System.out.println(entry.getMsgid() + " -> " + entry.getMsgstr().orElse(""));
-    }
-}
+    for(
+POEntry entry :poFile.
+
+getEntries()){
+        System.out.
+
+println(entry.getMsgid() +" -> "+entry.
+
+getMsgstr().
+
+orElse(""));
+        }
+        }
 
 // From a string
 POFile poFile = POParser.parseString("""
-    msgid "Hello"
-    msgstr "Bonjour"
-    """);
+        msgid "Hello"
+        msgstr "Bonjour"
+        """);
 ```
 
 ### Writing a PO file
@@ -97,8 +107,11 @@ import dev.tlmtech.po4j.writer.POWriter;
 String output = POWriter.writeToString(poFile);
 
 // Write to file
-try (OutputStream os = new FileOutputStream("output.po")) {
-    POWriter.write(poFile, os, StandardCharsets.UTF_8);
+try(
+        OutputStream os = new FileOutputStream("output.po")){
+        POWriter.
+
+        write(poFile, os, StandardCharsets.UTF_8);
 }
 ```
 
@@ -106,36 +119,38 @@ try (OutputStream os = new FileOutputStream("output.po")) {
 
 ```java
 POFile poFile = POFile.builder()
-    .header(POHeader.builder()
-        .language("fr")
-        .charset("UTF-8")
-        .withDefaults()
-        .build())
-    .entry(POEntry.builder()
-        .msgid("Hello")
-        .msgstr("Bonjour")
-        .addReference("main.c:10")
-        .build())
-    .entry(POEntry.builder()
-        .msgctxt("greeting")
-        .msgid("Hello")
-        .msgstr("Salut")
-        .addFlag("fuzzy")
-        .build())
-    .build();
+        .header(POHeader.builder()
+                .language("fr")
+                .charset("UTF-8")
+                .withDefaults()
+                .build())
+        .entry(POEntry.builder()
+                .msgid("Hello")
+                .msgstr("Bonjour")
+                .addReference("main.c:10")
+                .build())
+        .entry(POEntry.builder()
+                .msgctxt("greeting")
+                .msgid("Hello")
+                .msgstr("Salut")
+                .addFlag("fuzzy")
+                .build())
+        .build();
 ```
 
 ### Working with plural forms
 
 ```java
 POEntry pluralEntry = POEntry.builder()
-    .msgid("One file")
-    .msgidPlural("%d files")
-    .msgstrPlural(List.of("Un fichier", "%d fichiers"))
-    .build();
+        .msgid("One file")
+        .msgidPlural("%d files")
+        .msgstrPlural(List.of("Un fichier", "%d fichiers"))
+        .build();
 
-if (entry.isPlural()) {
-    List<String> translations = entry.getMsgstrPlural();
+if(entry.
+
+isPlural()){
+List<String> translations = entry.getMsgstrPlural();
 }
 ```
 
@@ -143,15 +158,15 @@ if (entry.isPlural()) {
 
 ```java
 POHeader header = poFile.getHeader().orElse(null);
-if (header != null) {
-    String language = header.getLanguage().orElse("unknown");
-    String charset = header.getCharset().orElse("UTF-8");
+if(header !=null){
+String language = header.getLanguage().orElse("unknown");
+String charset = header.getCharset().orElse("UTF-8");
 
-    PluralForms pf = header.getPluralForms().orElse(null);
-    if (pf != null) {
-        int nplurals = pf.getNplurals();
+PluralForms pf = header.getPluralForms().orElse(null);
+    if(pf !=null){
+int nplurals = pf.getNplurals();
     }
-}
+            }
 ```
 
 ## Requirements

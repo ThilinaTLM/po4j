@@ -1,6 +1,8 @@
 package dev.tlmtech.po4j.parser;
 
 import java.io.*;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,10 +23,10 @@ public class POLexer implements Closeable {
     private static final Pattern MSGSTR_PLURAL_PATTERN = Pattern.compile("msgstr\\[(\\d+)]");
 
     private final PushbackReader reader;
+    private final Deque<Token> tokenBuffer = new ArrayDeque<>();
     private int line = 1;
     private int column = 0;
     private String currentLine = "";
-    private Token peekedToken = null;
     private boolean inObsoleteBlock = false;
 
     /**
@@ -59,22 +61,28 @@ public class POLexer implements Closeable {
      * Peeks at the next token without consuming it.
      */
     public Token peek() throws IOException {
-        if (peekedToken == null) {
-            peekedToken = readNextToken();
+        if (tokenBuffer.isEmpty()) {
+            tokenBuffer.addFirst(readNextToken());
         }
-        return peekedToken;
+        return tokenBuffer.peekFirst();
     }
 
     /**
      * Returns the next token and advances the lexer.
      */
     public Token nextToken() throws IOException {
-        if (peekedToken != null) {
-            Token token = peekedToken;
-            peekedToken = null;
-            return token;
+        if (!tokenBuffer.isEmpty()) {
+            return tokenBuffer.removeFirst();
         }
         return readNextToken();
+    }
+
+    /**
+     * Pushes a token back to be returned by the next peek() or nextToken() call.
+     * Multiple tokens can be pushed back; they will be returned in LIFO order.
+     */
+    public void unread(Token token) {
+        tokenBuffer.addFirst(token);
     }
 
     private Token readNextToken() throws IOException {

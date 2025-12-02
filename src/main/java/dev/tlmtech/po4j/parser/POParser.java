@@ -169,7 +169,7 @@ public class POParser implements Closeable {
         token = lexer.peek();
         if (token.type() == TokenType.MSGCTXT) {
             lexer.nextToken();
-            String msgctxt = parseStringValue();
+            String msgctxt = parseStringValue(isObsolete);
             builder.msgctxt(msgctxt);
 
             // Handle obsolete continuation
@@ -190,7 +190,7 @@ public class POParser implements Closeable {
             );
         }
         lexer.nextToken();
-        String msgid = parseStringValue();
+        String msgid = parseStringValue(isObsolete);
         builder.msgid(msgid);
 
         // Handle obsolete continuation
@@ -202,7 +202,7 @@ public class POParser implements Closeable {
         token = lexer.peek();
         if (token.type() == TokenType.MSGID_PLURAL) {
             lexer.nextToken();
-            String msgidPlural = parseStringValue();
+            String msgidPlural = parseStringValue(isObsolete);
             builder.msgidPlural(msgidPlural);
 
             if (isObsolete) {
@@ -221,7 +221,7 @@ public class POParser implements Closeable {
                 );
             }
             lexer.nextToken();
-            String msgstr = parseStringValue();
+            String msgstr = parseStringValue(isObsolete);
             builder.msgstr(msgstr);
         }
 
@@ -354,7 +354,7 @@ public class POParser implements Closeable {
 
             lexer.nextToken();
             int index = token.getPluralIndex();
-            String value = parseStringValue();
+            String value = parseStringValue(isObsolete);
             plurals.put(index, value);
         }
 
@@ -369,11 +369,25 @@ public class POParser implements Closeable {
         }
     }
 
-    private String parseStringValue() throws IOException {
+    private String parseStringValue(boolean isObsolete) throws IOException {
         StringBuilder result = new StringBuilder();
 
         while (true) {
             Token token = lexer.peek();
+
+            // In obsolete entries, continuation lines have #~ prefix before string
+            // Only consume #~ if it's followed by a STRING (not another keyword)
+            if (isObsolete && token.type() == TokenType.OBSOLETE_PREFIX) {
+                Token obsoleteToken = lexer.nextToken(); // consume #~
+                token = lexer.peek();
+                if (token.type() != TokenType.STRING) {
+                    // Not a string continuation, push back the #~ for next entry
+                    lexer.unread(obsoleteToken);
+                    break;
+                }
+                // token is now the STRING, continue to consume it below
+            }
+
             if (token.type() != TokenType.STRING) {
                 break;
             }
@@ -382,6 +396,10 @@ public class POParser implements Closeable {
         }
 
         return result.toString();
+    }
+
+    private String parseStringValue() throws IOException {
+        return parseStringValue(false);
     }
 
     private void consumeObsoletePrefix() throws IOException {
