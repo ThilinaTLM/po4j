@@ -5,6 +5,7 @@ import dev.tlmtech.po4j.model.POFile;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.*;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Parser for GNU gettext PO files.
@@ -36,7 +37,7 @@ public class POParser implements Closeable {
     /**
      * Creates a parser with the given lexer and options.
      */
-    public POParser(POLexer lexer, POParserOptions options) {
+    public POParser(POLexer lexer, @Nullable POParserOptions options) {
         this.lexer = Objects.requireNonNull(lexer);
         this.options = options != null ? options : POParserOptions.defaults();
     }
@@ -137,7 +138,7 @@ public class POParser implements Closeable {
 
     // --- Entry parsing ---
 
-    private POEntry parseEntry() throws IOException {
+    private @Nullable POEntry parseEntry() throws IOException {
         POEntry.Builder builder = POEntry.builder();
 
         // Check for obsolete prefix

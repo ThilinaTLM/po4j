@@ -1,5 +1,7 @@
 package dev.tlmtech.po4j.parser;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Unescapes C-style escape sequences in strings.
  * Used when parsing PO file strings.
@@ -33,7 +35,7 @@ public final class StringUnescaper {
      * @return the unescaped string
      * @throws IllegalArgumentException if an invalid escape sequence is encountered
      */
-    public static String unescape(String input) {
+    public static @Nullable String unescape(@Nullable String input) {
         if (input == null || input.isEmpty()) {
             return input;
         }

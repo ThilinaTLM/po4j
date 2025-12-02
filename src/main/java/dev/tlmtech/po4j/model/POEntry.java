@@ -1,6 +1,7 @@
 package dev.tlmtech.po4j.model;
 
 import java.util.*;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a single translation entry in a PO file.
@@ -19,18 +20,18 @@ import java.util.*;
  */
 public final class POEntry {
 
-    private final String msgctxt;
+    private final @Nullable String msgctxt;
     private final String msgid;
-    private final String msgidPlural;
-    private final String msgstr;
+    private final @Nullable String msgidPlural;
+    private final @Nullable String msgstr;
     private final List<String> msgstrPlural;
     private final List<String> translatorComments;
     private final List<String> extractedComments;
     private final List<String> references;
     private final Set<String> flags;
-    private final String previousMsgctxt;
-    private final String previousMsgid;
-    private final String previousMsgidPlural;
+    private final @Nullable String previousMsgctxt;
+    private final @Nullable String previousMsgid;
+    private final @Nullable String previousMsgidPlural;
     private final boolean obsolete;
 
     private POEntry(Builder builder) {
@@ -255,7 +256,7 @@ public final class POEntry {
         return sb.toString();
     }
 
-    private String truncate(String s) {
+    private @Nullable String truncate(@Nullable String s) {
         if (s == null) return null;
         if (s.length() <= 30) return s;
         return s.substring(0, 27) + "...";
@@ -268,14 +269,14 @@ public final class POEntry {
         private final List<String> extractedComments = new ArrayList<>();
         private final List<String> references = new ArrayList<>();
         private final Set<String> flags = new LinkedHashSet<>();
-        private String msgctxt;
-        private String msgid;
-        private String msgidPlural;
-        private String msgstr;
-        private List<String> msgstrPlural;
-        private String previousMsgctxt;
-        private String previousMsgid;
-        private String previousMsgidPlural;
+        private @Nullable String msgctxt;
+        private @Nullable String msgid;
+        private @Nullable String msgidPlural;
+        private @Nullable String msgstr;
+        private @Nullable List<String> msgstrPlural;
+        private @Nullable String previousMsgctxt;
+        private @Nullable String previousMsgid;
+        private @Nullable String previousMsgidPlural;
         private boolean obsolete;
 
         private Builder() {}

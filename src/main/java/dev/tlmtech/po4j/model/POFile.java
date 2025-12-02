@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a complete PO file with header, entries, and obsolete entries.
@@ -18,7 +19,7 @@ import java.util.Optional;
  */
 public final class POFile {
 
-    private final POHeader header;
+    private final @Nullable POHeader header;
     private final List<POEntry> entries;
     private final List<POEntry> obsoleteEntries;
 
@@ -184,7 +185,7 @@ public final class POFile {
     public static final class Builder {
         private final List<POEntry> entries = new ArrayList<>();
         private final List<POEntry> obsoleteEntries = new ArrayList<>();
-        private POHeader header;
+        private @Nullable POHeader header;
 
         private Builder() {}
 

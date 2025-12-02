@@ -1,5 +1,7 @@
 package dev.tlmtech.po4j.parser;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Exception thrown when parsing a PO file fails.
  * Contains location information to help identify the error.
@@ -8,7 +10,7 @@ public class ParseException extends RuntimeException {
 
     private final int line;
     private final int column;
-    private final String context;
+    private final @Nullable String context;
 
     /**
      * Creates a parse exception with location information.
@@ -42,7 +44,7 @@ public class ParseException extends RuntimeException {
      * @param context the line content where the error occurred
      * @param cause   the underlying cause
      */
-    public ParseException(String message, int line, int column, String context, Throwable cause) {
+    public ParseException(String message, int line, int column, @Nullable String context, @Nullable Throwable cause) {
         super(message, cause);
         this.line = line;
         this.column = column;
@@ -66,7 +68,7 @@ public class ParseException extends RuntimeException {
     /**
      * Returns the context (line content) where the error occurred.
      */
-    public String getContext() {
+    public @Nullable String getContext() {
         return context;
     }
 

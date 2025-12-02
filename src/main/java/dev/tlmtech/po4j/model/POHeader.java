@@ -2,6 +2,7 @@ package dev.tlmtech.po4j.model;
 
 import java.util.*;
 import java.util.Locale;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the header of a PO file.
@@ -259,7 +260,7 @@ public final class POHeader {
 
         private Builder() {}
 
-        public Builder field(String name, String value) {
+        public Builder field(String name, @Nullable String value) {
             if (value == null) {
                 fields.remove(name);
             } else {

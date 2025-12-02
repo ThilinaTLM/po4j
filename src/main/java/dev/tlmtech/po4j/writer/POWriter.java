@@ -8,6 +8,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Writer for GNU gettext PO files.
@@ -31,7 +32,7 @@ public class POWriter implements Closeable {
     /**
      * Creates a writer with the given output writer and options.
      */
-    public POWriter(Writer writer, POWriterOptions options) {
+    public POWriter(Writer writer, @Nullable POWriterOptions options) {
         this.writer = new BufferedWriter(writer);
         this.options = options != null ? options : POWriterOptions.defaults();
         this.newline = this.options.getLineSeparator();
@@ -286,7 +287,8 @@ public class POWriter implements Closeable {
     // --- String writing ---
 
     private void writeStringLines(String keyword, String value, boolean obsolete) throws IOException {
-        String escaped = StringEscaper.escape(value);
+        // value is non-null, so escape() will return non-null
+        String escaped = java.util.Objects.requireNonNull(StringEscaper.escape(value));
 
         // Check if we need multi-line format
         boolean needsMultiLine = options.isWrapStrings()

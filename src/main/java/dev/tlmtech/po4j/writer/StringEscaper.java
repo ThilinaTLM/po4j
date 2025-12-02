@@ -1,5 +1,7 @@
 package dev.tlmtech.po4j.writer;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Escapes strings for output in PO file format.
  * Converts special characters to C-style escape sequences.
@@ -26,7 +28,7 @@ public final class StringEscaper {
      * @param input the string to escape
      * @return the escaped string
      */
-    public static String escape(String input) {
+    public static @Nullable String escape(@Nullable String input) {
         if (input == null) {
             return null;
         }
@@ -72,7 +74,7 @@ public final class StringEscaper {
      * @param input the string to check
      * @return true if the string contains characters that need escaping
      */
-    public static boolean needsEscaping(String input) {
+    public static boolean needsEscaping(@Nullable String input) {
         if (input == null || input.isEmpty()) {
             return false;
         }

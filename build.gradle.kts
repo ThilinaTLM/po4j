@@ -6,6 +6,7 @@ plugins {
     `maven-publish`
     id("com.diffplug.spotless") version "7.0.2"
     id("net.ltgt.errorprone") version "4.1.0"
+    id("com.github.spotbugs") version "6.0.26"
 }
 
 group = "dev.tlmtech"
@@ -26,6 +27,8 @@ tasks.withType<JavaCompile>().configureEach {
         allDisabledChecksAsWarnings.set(false)
         // Promote warnings to errors so CI fails on issues
         option("--enable-all-checks")
+        // NullAway configuration
+        option("NullAway:AnnotatedPackages", "dev.tlmtech.po4j")
     }
     options.compilerArgs.add("-Werror")
 }
@@ -40,6 +43,9 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     errorprone("com.google.errorprone:error_prone_core:2.36.0")
+    errorprone("com.uber.nullaway:nullaway:0.12.3")
+
+    compileOnly("org.jspecify:jspecify:1.0.0")
 }
 
 tasks.test {
@@ -112,4 +118,15 @@ spotless {
         trimTrailingWhitespace()
         endWithNewline()
     }
+}
+
+spotbugs {
+    toolVersion.set("4.8.6")
+    effort.set(com.github.spotbugs.snom.Effort.MAX)
+    reportLevel.set(com.github.spotbugs.snom.Confidence.LOW)
+}
+
+tasks.withType<com.github.spotbugs.snom.SpotBugsTask>().configureEach {
+    reports.create("html") { required.set(true) }
+    reports.create("xml") { required.set(false) }
 }

@@ -1,6 +1,7 @@
 package dev.tlmtech.po4j.parser;
 
 import java.util.Objects;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a token from the PO file lexer.
@@ -10,7 +11,7 @@ import java.util.Objects;
  * @param line   the line number (1-based) where the token starts
  * @param column the column number (1-based) where the token starts
  */
-public record Token(TokenType type, String value, int line, int column) {
+public record Token(TokenType type, @Nullable String value, int line, int column) {
 
     public Token {
         Objects.requireNonNull(type, "type must not be null");
@@ -19,7 +20,7 @@ public record Token(TokenType type, String value, int line, int column) {
     /**
      * Creates a token with default position (used for testing).
      */
-    public static Token of(TokenType type, String value) {
+    public static Token of(TokenType type, @Nullable String value) {
         return new Token(type, value, 0, 0);
     }
 
