@@ -1,11 +1,14 @@
-package io.pojava.writer;
+package dev.tlmtech.po4j.writer;
 
-import io.pojava.model.*;
+import dev.tlmtech.po4j.model.POEntry;
+import dev.tlmtech.po4j.model.POFile;
+import dev.tlmtech.po4j.model.POHeader;
 
 import java.io.*;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Writer for GNU gettext PO files.

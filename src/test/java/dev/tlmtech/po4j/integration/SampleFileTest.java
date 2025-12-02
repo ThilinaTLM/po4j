@@ -1,8 +1,11 @@
-package io.pojava.integration;
+package dev.tlmtech.po4j.integration;
 
-import io.pojava.model.*;
-import io.pojava.parser.POParser;
-import io.pojava.writer.POWriter;
+import dev.tlmtech.po4j.model.POEntry;
+import dev.tlmtech.po4j.model.POFile;
+import dev.tlmtech.po4j.model.POHeader;
+import dev.tlmtech.po4j.model.PluralForms;
+import dev.tlmtech.po4j.parser.POParser;
+import dev.tlmtech.po4j.writer.POWriter;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

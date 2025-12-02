@@ -1,4 +1,4 @@
-package io.pojava.writer;
+package dev.tlmtech.po4j.writer;
 
 /**
  * Escapes strings for output in PO file format.

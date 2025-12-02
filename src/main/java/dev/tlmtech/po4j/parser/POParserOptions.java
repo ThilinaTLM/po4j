@@ -1,4 +1,4 @@
-package io.pojava.parser;
+package dev.tlmtech.po4j.parser;
 
 /**
  * Configuration options for the PO file parser.
@@ -47,10 +47,12 @@ public final class POParserOptions {
         private boolean strict = true;
         private boolean preserveObsolete = true;
 
-        private Builder() {}
+        private Builder() {
+        }
 
         /**
          * Sets strict parsing mode.
+         *
          * @param strict true to throw on parse errors, false to skip malformed entries
          */
         public Builder strict(boolean strict) {
@@ -60,6 +62,7 @@ public final class POParserOptions {
 
         /**
          * Sets whether to preserve obsolete entries.
+         *
          * @param preserveObsolete true to include obsolete entries in parse result
          */
         public Builder preserveObsolete(boolean preserveObsolete) {

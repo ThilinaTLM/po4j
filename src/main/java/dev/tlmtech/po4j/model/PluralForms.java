@@ -1,4 +1,4 @@
-package io.pojava.model;
+package dev.tlmtech.po4j.model;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -32,7 +32,7 @@ public final class PluralForms {
     /**
      * Creates a new PluralForms instance.
      *
-     * @param nplurals the number of plural forms (must be >= 1)
+     * @param nplurals         the number of plural forms (must be >= 1)
      * @param pluralExpression the C expression to evaluate for input n
      * @return a new PluralForms instance
      */

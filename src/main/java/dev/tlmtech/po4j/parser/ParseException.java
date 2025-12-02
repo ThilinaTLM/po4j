@@ -1,4 +1,4 @@
-package io.pojava.parser;
+package dev.tlmtech.po4j.parser;
 
 /**
  * Exception thrown when parsing a PO file fails.
@@ -14,8 +14,8 @@ public class ParseException extends RuntimeException {
      * Creates a parse exception with location information.
      *
      * @param message the error message
-     * @param line the line number (1-based)
-     * @param column the column number (1-based)
+     * @param line    the line number (1-based)
+     * @param column  the column number (1-based)
      */
     public ParseException(String message, int line, int column) {
         this(message, line, column, null, null);
@@ -25,8 +25,8 @@ public class ParseException extends RuntimeException {
      * Creates a parse exception with location and context information.
      *
      * @param message the error message
-     * @param line the line number (1-based)
-     * @param column the column number (1-based)
+     * @param line    the line number (1-based)
+     * @param column  the column number (1-based)
      * @param context the line content where the error occurred
      */
     public ParseException(String message, int line, int column, String context) {
@@ -37,10 +37,10 @@ public class ParseException extends RuntimeException {
      * Creates a parse exception with a cause.
      *
      * @param message the error message
-     * @param line the line number (1-based)
-     * @param column the column number (1-based)
+     * @param line    the line number (1-based)
+     * @param column  the column number (1-based)
      * @param context the line content where the error occurred
-     * @param cause the underlying cause
+     * @param cause   the underlying cause
      */
     public ParseException(String message, int line, int column, String context, Throwable cause) {
         super(message, cause);

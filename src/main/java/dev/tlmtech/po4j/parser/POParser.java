@@ -1,10 +1,10 @@
-package io.pojava.parser;
+package dev.tlmtech.po4j.parser;
 
-import io.pojava.model.*;
+import dev.tlmtech.po4j.model.POEntry;
+import dev.tlmtech.po4j.model.POFile;
 
 import java.io.*;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**

@@ -1,6 +1,9 @@
-package io.pojava.model;
+package dev.tlmtech.po4j.model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Represents a complete PO file with header, entries, and obsolete entries.
@@ -95,7 +98,7 @@ public final class POFile {
     /**
      * Finds an entry by msgid and context.
      *
-     * @param msgid the message ID
+     * @param msgid   the message ID
      * @param context the context, or null for entries without context
      */
     public Optional<POEntry> findByMsgidAndContext(String msgid, String context) {
@@ -190,11 +193,12 @@ public final class POFile {
     // --- Builder ---
 
     public static final class Builder {
-        private POHeader header;
         private final List<POEntry> entries = new ArrayList<>();
         private final List<POEntry> obsoleteEntries = new ArrayList<>();
+        private POHeader header;
 
-        private Builder() {}
+        private Builder() {
+        }
 
         public Builder header(POHeader header) {
             this.header = header;

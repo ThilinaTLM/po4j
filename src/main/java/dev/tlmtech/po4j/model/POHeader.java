@@ -1,4 +1,4 @@
-package io.pojava.model;
+package dev.tlmtech.po4j.model;
 
 import java.util.*;
 
@@ -259,7 +259,8 @@ public final class POHeader {
         private final List<String> translatorComments = new ArrayList<>();
         private final Set<String> flags = new LinkedHashSet<>();
 
-        private Builder() {}
+        private Builder() {
+        }
 
         public Builder field(String name, String value) {
             if (value == null) {

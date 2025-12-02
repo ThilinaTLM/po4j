@@ -1,4 +1,4 @@
-package io.pojava.parser;
+package dev.tlmtech.po4j.parser;
 
 /**
  * Unescapes C-style escape sequences in strings.
@@ -166,17 +166,50 @@ public final class StringUnescaper {
             char next = input.charAt(i + 1);
 
             switch (next) {
-                case '\\' -> { result.append('\\'); i += 2; }
-                case '"' -> { result.append('"'); i += 2; }
-                case '\'' -> { result.append('\''); i += 2; }
-                case 'n' -> { result.append('\n'); i += 2; }
-                case 't' -> { result.append('\t'); i += 2; }
-                case 'r' -> { result.append('\r'); i += 2; }
-                case 'v' -> { result.append('\u000B'); i += 2; }
-                case 'b' -> { result.append('\b'); i += 2; }
-                case 'f' -> { result.append('\f'); i += 2; }
-                case 'a' -> { result.append('\u0007'); i += 2; }
-                case '?' -> { result.append('?'); i += 2; }
+                case '\\' -> {
+                    result.append('\\');
+                    i += 2;
+                }
+                case '"' -> {
+                    result.append('"');
+                    i += 2;
+                }
+                case '\'' -> {
+                    result.append('\'');
+                    i += 2;
+                }
+                case 'n' -> {
+                    result.append('\n');
+                    i += 2;
+                }
+                case 't' -> {
+                    result.append('\t');
+                    i += 2;
+                }
+                case 'r' -> {
+                    result.append('\r');
+                    i += 2;
+                }
+                case 'v' -> {
+                    result.append('\u000B');
+                    i += 2;
+                }
+                case 'b' -> {
+                    result.append('\b');
+                    i += 2;
+                }
+                case 'f' -> {
+                    result.append('\f');
+                    i += 2;
+                }
+                case 'a' -> {
+                    result.append('\u0007');
+                    i += 2;
+                }
+                case '?' -> {
+                    result.append('?');
+                    i += 2;
+                }
                 case '0', '1', '2', '3', '4', '5', '6', '7' -> {
                     i += 2;
                     int octalValue = next - '0';

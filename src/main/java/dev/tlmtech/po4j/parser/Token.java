@@ -1,13 +1,13 @@
-package io.pojava.parser;
+package dev.tlmtech.po4j.parser;
 
 import java.util.Objects;
 
 /**
  * Represents a token from the PO file lexer.
  *
- * @param type the type of token
- * @param value the token value (string content for STRING, comment text for comments, etc.)
- * @param line the line number (1-based) where the token starts
+ * @param type   the type of token
+ * @param value  the token value (string content for STRING, comment text for comments, etc.)
+ * @param line   the line number (1-based) where the token starts
  * @param column the column number (1-based) where the token starts
  */
 public record Token(TokenType type, String value, int line, int column) {

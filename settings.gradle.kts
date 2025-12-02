@@ -1,1 +1,1 @@
-rootProject.name = "pojava"
+rootProject.name = "po4j"

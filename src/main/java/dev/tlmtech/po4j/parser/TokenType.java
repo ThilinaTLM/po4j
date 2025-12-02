@@ -1,4 +1,4 @@
-package io.pojava.parser;
+package dev.tlmtech.po4j.parser;
 
 /**
  * Types of tokens that can appear in a PO file.

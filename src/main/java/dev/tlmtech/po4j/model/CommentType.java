@@ -1,4 +1,4 @@
-package io.pojava.model;
+package dev.tlmtech.po4j.model;
 
 /**
  * Types of comments that can appear in PO file entries.
@@ -43,18 +43,6 @@ public enum CommentType {
     }
 
     /**
-     * Returns the prefix string for this comment type.
-     * For TRANSLATOR, returns "#" (space is part of content).
-     * For others, returns "#X" where X is the type indicator.
-     */
-    public String getPrefix() {
-        if (this == TRANSLATOR) {
-            return "#";
-        }
-        return String.valueOf(firstChar) + secondChar;
-    }
-
-    /**
      * Determines the comment type from a line starting with '#'.
      *
      * @param line the comment line (must start with '#')
@@ -77,5 +65,17 @@ public enum CommentType {
             case '|' -> PREVIOUS;
             default -> TRANSLATOR;
         };
+    }
+
+    /**
+     * Returns the prefix string for this comment type.
+     * For TRANSLATOR, returns "#" (space is part of content).
+     * For others, returns "#X" where X is the type indicator.
+     */
+    public String getPrefix() {
+        if (this == TRANSLATOR) {
+            return "#";
+        }
+        return String.valueOf(firstChar) + secondChar;
     }
 }

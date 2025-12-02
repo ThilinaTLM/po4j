@@ -1,8 +1,11 @@
-package io.pojava.integration;
+package dev.tlmtech.po4j.integration;
 
-import io.pojava.model.*;
-import io.pojava.parser.POParser;
-import io.pojava.writer.POWriter;
+import dev.tlmtech.po4j.model.POEntry;
+import dev.tlmtech.po4j.model.POFile;
+import dev.tlmtech.po4j.model.POHeader;
+import dev.tlmtech.po4j.model.PluralForms;
+import dev.tlmtech.po4j.parser.POParser;
+import dev.tlmtech.po4j.writer.POWriter;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -125,7 +128,7 @@ class RoundTripTest {
                 "Language: fr\\n"
                 "Content-Type: text/plain; charset=UTF-8\\n"
                 "Plural-Forms: nplurals=2; plural=(n > 1);\\n"
-
+                
                 msgid "Hello"
                 msgstr "Bonjour"
                 """;
@@ -199,7 +202,7 @@ class RoundTripTest {
         String input = """
                 msgid "Current"
                 msgstr "Actuel"
-
+                
                 #~ msgid "Old"
                 #~ msgstr "Ancien"
                 """;
@@ -245,10 +248,10 @@ class RoundTripTest {
         String input = """
                 msgid "First"
                 msgstr "Premier"
-
+                
                 msgid "Second"
                 msgstr "Deuxième"
-
+                
                 msgid "Third"
                 msgstr "Troisième"
                 """;
@@ -271,7 +274,7 @@ class RoundTripTest {
         String input = """
                 msgid "Hello"
                 msgstr "你好"
-
+                
                 msgid "Goodbye"
                 msgstr "さようなら"
                 """;

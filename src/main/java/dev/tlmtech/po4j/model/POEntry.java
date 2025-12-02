@@ -1,4 +1,4 @@
-package io.pojava.model;
+package dev.tlmtech.po4j.model;
 
 import java.util.*;
 
@@ -255,21 +255,22 @@ public final class POEntry {
     // --- Builder ---
 
     public static final class Builder {
+        private final List<String> translatorComments = new ArrayList<>();
+        private final List<String> extractedComments = new ArrayList<>();
+        private final List<String> references = new ArrayList<>();
+        private final Set<String> flags = new LinkedHashSet<>();
         private String msgctxt;
         private String msgid;
         private String msgidPlural;
         private String msgstr;
         private List<String> msgstrPlural;
-        private final List<String> translatorComments = new ArrayList<>();
-        private final List<String> extractedComments = new ArrayList<>();
-        private final List<String> references = new ArrayList<>();
-        private final Set<String> flags = new LinkedHashSet<>();
         private String previousMsgctxt;
         private String previousMsgid;
         private String previousMsgidPlural;
         private boolean obsolete;
 
-        private Builder() {}
+        private Builder() {
+        }
 
         public Builder msgctxt(String msgctxt) {
             this.msgctxt = msgctxt;
@@ -384,9 +385,9 @@ public final class POEntry {
         /**
          * Builds the POEntry.
          *
-         * @throws NullPointerException if msgid is null
+         * @throws NullPointerException  if msgid is null
          * @throws IllegalStateException if both msgstr and msgstrPlural are set,
-         *         or if msgstrPlural is set without msgidPlural
+         *                               or if msgstrPlural is set without msgidPlural
          */
         public POEntry build() {
             if (msgid == null) {

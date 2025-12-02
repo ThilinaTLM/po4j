@@ -1,7 +1,7 @@
-package io.pojava.util;
+package dev.tlmtech.po4j.util;
 
-import io.pojava.parser.StringUnescaper;
-import io.pojava.writer.StringEscaper;
+import dev.tlmtech.po4j.parser.StringUnescaper;
+import dev.tlmtech.po4j.writer.StringEscaper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
